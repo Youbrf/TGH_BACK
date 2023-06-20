@@ -1,6 +1,7 @@
 package be.icc.tgh.controller;
 
 import be.icc.tgh.model.RendezVous;
+import be.icc.tgh.model.Service;
 import be.icc.tgh.service.RendezVousS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 @RestController
 @RequestMapping("/api/RendezVous")

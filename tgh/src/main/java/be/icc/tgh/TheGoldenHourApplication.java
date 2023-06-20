@@ -1,13 +1,17 @@
 package be.icc.tgh;
 
 import be.icc.tgh.model.CategorieService;
+import be.icc.tgh.model.RendezVous;
 import be.icc.tgh.model.Service;
 import be.icc.tgh.service.CategorieServiceS;
+import be.icc.tgh.service.RendezVousS;
 import be.icc.tgh.service.ServiceS;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import java.util.List;
 
 @SpringBootApplication
 public class TheGoldenHourApplication {
@@ -17,7 +21,7 @@ public class TheGoldenHourApplication {
 	}
 /*
 	@Bean
-	CommandLineRunner run(ServiceS s, CategorieServiceS c){
+	CommandLineRunner run(ServiceS s, CategorieServiceS c, RendezVousS r) {
 		return args -> {
 			c.creerCategorieService(new CategorieService(null, "Beauté Des Mains",null));
 			c.creerCategorieService(new CategorieService(null, "Beauté Des Pieds",null));
@@ -47,7 +51,5 @@ public class TheGoldenHourApplication {
 			s.creerService(new Service(null, "Teinture des cils", 20, 25, c.getCategorieServiceByID(6L)));
 			s.creerService(new Service(null,  "Dépose d'extensions de cils",30, 25, c.getCategorieServiceByID(6L)));
 		};
+	}*/
 	}
-*/
-}
-
