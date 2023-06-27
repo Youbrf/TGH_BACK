@@ -19,7 +19,7 @@ public class UserS {
     public User getClientByID(Integer id){
         return repo.findById(id).orElse(null);
     }
-    public User creerClient(User user){
+    public User creerUser(User user){
         return repo.save(user);
     }
     public User updateClient(User user){
