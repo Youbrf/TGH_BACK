@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
 @RequestMapping("/api/Services")
-@CrossOrigin(origins = "*")
 public class ServiceC {
     @Autowired
     private ServiceS service;

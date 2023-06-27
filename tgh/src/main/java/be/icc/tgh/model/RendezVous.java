@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -28,10 +27,8 @@ public class RendezVous {
     private LocalTime heureFin;
     @ManyToOne
     @JsonIgnore
-    private Client client;
-    @ManyToOne
-    @JsonIgnore
-    private Estheticienne estheticienne;
+    private User user;
+
     @ManyToOne
     @JsonIgnore
     private Service service;

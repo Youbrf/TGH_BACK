@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.util.List;
 @RestController
 @RequestMapping("/api/RendezVous")
-@CrossOrigin(origins = "*")
 public class RendezVousC {
     @Autowired
     private RendezVousS service;

@@ -1,6 +1,5 @@
 package be.icc.tgh.service;
 
-import be.icc.tgh.model.Administrateur;
 import be.icc.tgh.model.CategorieService;
 import be.icc.tgh.repository.CategorieServiceR;
 import org.springframework.beans.factory.annotation.Autowired;
