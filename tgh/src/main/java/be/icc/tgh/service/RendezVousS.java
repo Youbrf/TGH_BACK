@@ -19,9 +19,7 @@ public class RendezVousS {
     public RendezVous getRendezVousByID(Long id){
         return repo.findById(id).orElse(null);
     }
-    public RendezVous creerRendezVous(RendezVous rendezvous){
-        return repo.save(rendezvous);
-    }
+    public RendezVous creerRendezVous(RendezVous rendezvous){return repo.save(rendezvous);}
     public RendezVous updateRendezVous(RendezVous rendezvous){
         return repo.save(rendezvous);
     }
