@@ -1,6 +1,6 @@
 package be.icc.tgh.repository;
 
-import be.icc.tgh.model.CategorieService;
+
 import be.icc.tgh.model.Service;
 import org.springframework.data.jpa.repository.JpaRepository;
 

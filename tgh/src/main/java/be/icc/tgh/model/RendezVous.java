@@ -32,11 +32,8 @@ public class RendezVous {
     private LocalDate dateAnnulation;
     private String etatPaiement;
     @ManyToOne
-    @JsonIgnore
-    private Client client;
-    @ManyToOne
-    @JsonIgnore
-    private Estheticienne estheticienne;
+    private User user;
+
     @ManyToMany
     @JoinTable(name = "rendezvous_service",joinColumns = @JoinColumn(name = "id_rendezvous"), inverseJoinColumns = @JoinColumn(name = "id_service"))
     private List<Service> services;
