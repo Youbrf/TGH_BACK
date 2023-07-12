@@ -13,19 +13,19 @@ public class UserS {
     @Autowired
     private UserR repo;
 
-    public List<User> getAllClients(){
+    public List<User> getAllUsers(){
         return repo.findAll();
     }
-    public User getClientByID(Integer id){
+    public User getUserByID(Integer id){
         return repo.findById(id).orElse(null);
     }
     public User creerUser(User user){
         return repo.save(user);
     }
-    public User updateClient(User user){
+    public User updateUser(User user){
         return repo.save(user);
     }
-    public void deleteClient(Integer id){
+    public void deleteUser(Integer id){
         repo.deleteById(id);
     }
 

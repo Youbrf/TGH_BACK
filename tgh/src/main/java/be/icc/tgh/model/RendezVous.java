@@ -1,6 +1,5 @@
 package be.icc.tgh.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +32,9 @@ public class RendezVous {
     private String etatPaiement;
     @ManyToOne
     private User user;
+
+    @ManyToOne
+    private User employer;
 
     @ManyToMany
     @JoinTable(name = "rendezvous_service",joinColumns = @JoinColumn(name = "id_rendezvous"), inverseJoinColumns = @JoinColumn(name = "id_service"))

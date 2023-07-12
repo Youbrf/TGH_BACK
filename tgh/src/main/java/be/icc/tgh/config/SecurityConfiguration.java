@@ -37,7 +37,7 @@ public class SecurityConfiguration {
         })
         .and()
         .authorizeHttpRequests()
-        .requestMatchers("/api/auth/**","/api/Services/**","/api/CategorieServices/**")
+        .requestMatchers("/api/auth/**","/api/Services/**","/api/CategorieServices/**","/api/Users/**","/api/RendezVous/**")
           .permitAll()
         .anyRequest()
           .authenticated()

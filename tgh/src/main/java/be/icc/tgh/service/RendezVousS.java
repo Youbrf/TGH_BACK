@@ -1,6 +1,7 @@
 package be.icc.tgh.service;
 
 import be.icc.tgh.model.RendezVous;
+import be.icc.tgh.model.User;
 import be.icc.tgh.repository.RendezVousR;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,12 @@ public class RendezVousS {
     public RendezVous getRendezVousByID(Long id){
         return repo.findById(id).orElse(null);
     }
-    public RendezVous creerRendezVous(RendezVous rendezvous){return repo.save(rendezvous);}
+    public RendezVous creerRendezVous(RendezVous rendezvous){
+        rendezvous.setDateCreation(LocalDate.now());
+        return repo.save(rendezvous);
+    }
     public RendezVous updateRendezVous(RendezVous rendezvous){
+        rendezvous.setDateModification(LocalDate.now());
         return repo.save(rendezvous);
     }
     public void deleteRendezVous(Long id){
@@ -29,5 +34,13 @@ public class RendezVousS {
 
     public List<RendezVous> findByDateReservation(LocalDate date) {
         return  repo.findByDateReservation(date);
+    }
+
+    public List<RendezVous> findByUser(User user) {
+        return repo.findByUser(user);
+    }
+
+    public List<RendezVous> findByEmployer(User user) {
+        return repo.findByEmployer(user);
     }
 }
