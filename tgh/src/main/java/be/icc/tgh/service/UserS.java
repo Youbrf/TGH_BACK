@@ -4,6 +4,8 @@ import be.icc.tgh.model.Role;
 import be.icc.tgh.model.User;
 import be.icc.tgh.repository.UserR;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +17,8 @@ public class UserS {
     @Autowired
     private UserR repo;
 
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     public List<User> getAllUsers(){
         return repo.findAll();
     }
@@ -22,6 +26,7 @@ public class UserS {
         return repo.findById(id).orElse(null);
     }
     public User creerUser(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return repo.save(user);
     }
     public User updateUser(User user){
