@@ -1,5 +1,6 @@
 package be.icc.tgh.service;
 
+import be.icc.tgh.model.Role;
 import be.icc.tgh.model.User;
 import be.icc.tgh.repository.UserR;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class UserS {
@@ -31,5 +33,17 @@ public class UserS {
 
     public Optional<User> findByEmail(String email) {
         return repo.findByEmail(email);
+    }
+
+    public User getRandomUser(Role role) {
+        List<User> users = repo.findByRole(role);
+        if (users.isEmpty()) {
+            return null;
+        }
+        Random random = new Random();
+        int randomIndex = random.nextInt(users.size());
+        User randomUser = users.get(randomIndex);
+
+        return repo.findById(randomUser.getId()).orElse(null);
     }
 }

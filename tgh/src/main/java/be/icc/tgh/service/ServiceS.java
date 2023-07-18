@@ -2,10 +2,10 @@ package be.icc.tgh.service;
 
 import be.icc.tgh.model.Service;
 import be.icc.tgh.repository.ServiceR;
-import org.hibernate.type.internal.UserTypeVersionJavaTypeWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Random;
 
 @org.springframework.stereotype.Service
 public class ServiceS {
@@ -34,5 +34,12 @@ public class ServiceS {
         return repo.findByCategorieId(id);
     }
 
+
+    public Service getRandomService() {
+        List<Service> services = repo.findAll();
+        Random random = new Random();
+        long randomIndex = random.nextLong(services.size());
+        return repo.findById(randomIndex).orElse(null);
+    }
 
 }
