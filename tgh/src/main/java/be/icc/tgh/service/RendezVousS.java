@@ -32,8 +32,8 @@ public class RendezVousS {
         repo.deleteById(id);
     }
 
-    public List<RendezVous> findByDateReservation(LocalDate date) {
-        return  repo.findByDateReservation(date);
+    public List<RendezVous> findReservationByEmployer(Integer id, LocalDate date) {
+        return  repo.findReservationByEmployer(id,date);
     }
 
     public List<RendezVous> findByUser(User user) {

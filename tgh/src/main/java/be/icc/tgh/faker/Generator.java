@@ -94,7 +94,7 @@ public class Generator {
         user.setLastname(faker.name().lastName());
         user.setEmail(faker.internet().emailAddress());
         user.setPassword(faker.internet().password());
-        user.setNumérogsm(faker.phoneNumber().cellPhone());
+        user.setGsm(faker.phoneNumber().cellPhone());
         user.setRole(Role.USER);
 
         // Sauvegarde de l'utilisateur dans la base de données
@@ -111,7 +111,7 @@ public class Generator {
         employer.setLastname(faker.name().lastName());
         employer.setEmail(faker.internet().emailAddress());
         employer.setPassword(faker.internet().password());
-        employer.setNumérogsm(faker.phoneNumber().cellPhone());
+        employer.setGsm(faker.phoneNumber().cellPhone());
         employer.setRole(Role.EMPLOYEE);
 
         // Sauvegarde de l'employeur dans la base de données

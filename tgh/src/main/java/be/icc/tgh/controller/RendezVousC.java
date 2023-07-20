@@ -57,9 +57,9 @@ public class RendezVousC {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/search")
-    public List<RendezVous> searchRendezVous(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        return service.findByDateReservation(date);
+    @GetMapping("/search/{id}")
+    public List<RendezVous> searchRendezVous(@PathVariable("id") Integer id,@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return service.findReservationByEmployer(id,date);
     }
 
     @GetMapping("/user")
