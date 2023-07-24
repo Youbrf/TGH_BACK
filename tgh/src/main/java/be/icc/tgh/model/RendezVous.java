@@ -32,12 +32,12 @@ public class RendezVous {
     private String etatPaiement;
     @ManyToOne
     private User user;
-
     @ManyToOne
     private User employer;
-
     @ManyToMany
     @JoinTable(name = "rendezvous_service",joinColumns = @JoinColumn(name = "id_rendezvous"), inverseJoinColumns = @JoinColumn(name = "id_service"))
     private List<Service> services;
+    @OneToOne(mappedBy = "rendezVous", cascade = CascadeType.ALL)
+    private Review review;
 
 }
