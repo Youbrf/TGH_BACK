@@ -17,10 +17,8 @@ public class Review {
     private Long id;
     private int rating;
     private String comment;
-
     @ManyToOne
     private User user;
-
     @OneToOne
-    private RendezVous rendezVous;
+    private Reservation reservation;
 }

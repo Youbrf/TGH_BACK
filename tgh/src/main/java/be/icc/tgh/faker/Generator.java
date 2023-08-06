@@ -1,10 +1,10 @@
 package be.icc.tgh.faker;
 
-import be.icc.tgh.model.RendezVous;
+import be.icc.tgh.model.Reservation;
 import be.icc.tgh.model.Role;
 import be.icc.tgh.model.Service;
 import be.icc.tgh.model.User;
-import be.icc.tgh.service.RendezVousS;
+import be.icc.tgh.service.ReservationS;
 import be.icc.tgh.service.ServiceS;
 import be.icc.tgh.service.UserS;
 import com.github.javafaker.Faker;
@@ -26,18 +26,18 @@ public class Generator {
     private ServiceS serviceService;
 
     @Autowired
-    private RendezVousS rendezVousS;
+    private ReservationS reservationS;
 
-    public Generator(UserS userService, ServiceS serviceService, RendezVousS rendezVousS) {
+    public Generator(UserS userService, ServiceS serviceService, ReservationS reservationS) {
         this.userService = userService;
         this.serviceService = serviceService;
-        this.rendezVousS = rendezVousS;
+        this.reservationS = reservationS;
     }
 
-    public RendezVous generateFakeRendezVous() {
+    public Reservation generateFakeReservation() {
         Faker faker = new Faker(new Locale("fr"));
         Random random = new Random();
-        RendezVous rendezVous = new RendezVous();
+        Reservation reservation = new Reservation();
         LocalDate dateReservation = LocalDate.now().plusDays(random.nextLong(90)); // Génère une date aléatoire dans les 30 prochains jours
         int heureD = ThreadLocalRandom.current().nextInt(10, 18); // Génère un nombre aléatoire entre 10 (inclus) et 18 (exclus)
         int minuteDebut = ThreadLocalRandom.current().nextInt(0, 4)*15; // Génère un nombre aléatoire entre 0 (inclus) et 60 (exclus)
@@ -46,11 +46,11 @@ public class Generator {
         // Génération des services
         List<Service> services = new ArrayList<Service>();
         services.add(serviceService.getRandomService());
-        rendezVous.setServices(services);
+        reservation.setServices(services);
 
         int dureTotaleDesServices = 0;
         Double montantTotal = 0.0;
-        for (Service service : rendezVous.getServices()) {
+        for (Service service : reservation.getServices()) {
             if (service != null) {
                 dureTotaleDesServices += service.getDuree();
                 montantTotal += service.getPrix();
@@ -62,28 +62,28 @@ public class Generator {
         LocalDate dateModification = dateCreation.plusDays(random.nextInt(10)); // Génère une date de modification aléatoire entre la date de création et 10 jours après
 
 
-        rendezVous.setDateReservation(dateReservation);
-        rendezVous.setHeureDebut(heureDebut);
-        rendezVous.setHeureFin(heureFin);
-        rendezVous.setRemarquesSpeciales(faker.lorem().sentence());
-        rendezVous.setStatutReservation(faker.options().option("CONFIRMED", "PENDING", "CANCELLED"));
-        rendezVous.setMontantTotal(montantTotal);
-        rendezVous.setModePaiement(faker.options().option("CASH", "CREDIT_CARD", "DEBIT_CARD"));
-        rendezVous.setDateCreation(dateCreation);
-        rendezVous.setDateModification(dateModification);
-        rendezVous.setDateAnnulation(null);
-        rendezVous.setEtatPaiement(faker.options().option("PAID", "UNPAID"));
+        reservation.setDateReservation(dateReservation);
+        reservation.setHeureDebut(heureDebut);
+        reservation.setHeureFin(heureFin);
+        reservation.setRemarquesSpeciales(faker.lorem().sentence());
+        reservation.setStatutReservation(faker.options().option("CONFIRMED", "PENDING", "CANCELLED"));
+        reservation.setMontantTotal(montantTotal);
+        reservation.setModePaiement(faker.options().option("CASH", "CREDIT_CARD", "DEBIT_CARD"));
+        reservation.setDateCreation(dateCreation);
+        reservation.setDateModification(dateModification);
+        reservation.setDateAnnulation(null);
+        reservation.setEtatPaiement(faker.options().option("PAID", "UNPAID"));
 
         // Génération de l'utilisateur
         User user = userService.getRandomUser(Role.USER);
-        rendezVous.setUser(user);
+        reservation.setUser(user);
 
         // Génération de l'employeur
         User employer = userService.getRandomUser(Role.EMPLOYEE);
-        rendezVous.setEmployer(employer);
+        reservation.setEmployer(employer);
 
-        rendezVousS.creerRendezVous(rendezVous);
-        return rendezVous;
+        reservationS.creerReservation(reservation);
+        return reservation;
     }
 
     public User generateFakeUser() {

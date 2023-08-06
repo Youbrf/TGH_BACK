@@ -1,16 +1,24 @@
 package be.icc.tgh;
 
+import be.icc.tgh.faker.Generator;
+import be.icc.tgh.model.*;
+import be.icc.tgh.service.CategorieServiceS;
+import be.icc.tgh.service.ReservationS;
+import be.icc.tgh.service.ServiceS;
+import be.icc.tgh.service.UserS;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class TheGoldenHourApplication {
     public static void main(String[] args) {
         SpringApplication.run(TheGoldenHourApplication.class, args);
     }
-/*
+
     @Bean
-    CommandLineRunner run(ServiceS s, CategorieServiceS c, RendezVousS r, UserS u) {
+    CommandLineRunner run(ServiceS s, CategorieServiceS c, ReservationS r, UserS u) {
         return args -> {
             u.creerUser(new User("admin@gmail.com", "admin", Role.ADMIN));
             u.creerUser(new User("user@gmail.com", "user", Role.USER));
@@ -43,22 +51,22 @@ public class TheGoldenHourApplication {
             s.creerService(new Service("Dépose d'extensions de cils", "La dépose d'extensions de cils consiste à retirer délicatement les extensions de cils existantes. Ce processus est réalisé avec soin pour éviter d'endommager vos cils naturels. Vous pouvez ensuite choisir de faire poser de nouvelles extensions ou garder vos cils au naturel.", 30, 25, c.getCategorieServiceByID(6L)));
 
             // Création de l'instance du générateur avec les repositories
-            Generator rendezVousGenerator = new Generator(u, s, r);
+            Generator ReservationGenerator = new Generator(u, s, r);
 
             for (int i = 0; i < 100; i++) {
-                User user = rendezVousGenerator.generateFakeUser();
+                User user = ReservationGenerator.generateFakeUser();
             }
 
             // Création et enregistrement des employeurs
             for (int i = 0; i < 5; i++) {
-                User employer = rendezVousGenerator.generateFakeEmployer();
+                User employer = ReservationGenerator.generateFakeEmployer();
             }
 
             // Génération des rendez-vous factices et enregistrement
             for (int i = 0; i < 1000; i++) {
-                RendezVous rendezVous = rendezVousGenerator.generateFakeRendezVous();
+                Reservation Reservation = ReservationGenerator.generateFakeReservation();
             }
 
         };
-    }*/
+    }
 }

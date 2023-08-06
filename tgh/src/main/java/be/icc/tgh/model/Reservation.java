@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class RendezVous {
+public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,9 +35,9 @@ public class RendezVous {
     @ManyToOne
     private User employer;
     @ManyToMany
-    @JoinTable(name = "rendezvous_service",joinColumns = @JoinColumn(name = "id_rendezvous"), inverseJoinColumns = @JoinColumn(name = "id_service"))
+    @JoinTable(name = "Reservation_service",joinColumns = @JoinColumn(name = "id_Reservation"), inverseJoinColumns = @JoinColumn(name = "id_service"))
     private List<Service> services;
-    @OneToOne(mappedBy = "rendezVous", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
     private Review review;
 
 }
