@@ -1,13 +1,15 @@
 package be.icc.tgh.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Data
@@ -28,7 +30,5 @@ public class Promotion {
 
     private LocalDate dateFin;
 
-    @ManyToMany
-    @JoinTable(name = "promotions_services", joinColumns = @JoinColumn(name = "id_promotion"), inverseJoinColumns = @JoinColumn(name = "id_service"))
-    private List<Service> services;
+    private double reduction;
 }

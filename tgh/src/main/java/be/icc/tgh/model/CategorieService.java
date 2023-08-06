@@ -1,9 +1,6 @@
 package be.icc.tgh.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +17,7 @@ public class CategorieService {
     private Long id;
 
     private String nom;
-
+    @Column(columnDefinition = "LONGTEXT")
     private String description;
 
 }

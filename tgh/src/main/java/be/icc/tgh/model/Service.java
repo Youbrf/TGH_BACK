@@ -15,23 +15,23 @@ public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nom;
-
+    @Column(columnDefinition = "LONGTEXT")
     private String description;
-
     private Integer duree;
-
     private double prix;
-
     @ManyToOne
     @JoinColumn(name = "id_categorie")
     private CategorieService categorie;
+    @ManyToOne
+    @JoinColumn(name = "id_promotion")
+    private Promotion promotion;
 
-    public Service(Object id, String nom, int duree, int prix, CategorieService categorie) {
-        this.nom=nom;
-        this.duree=duree;
-        this.prix=prix;
-        this.categorie=categorie;
+    public Service(String nom, String description, int duree, int prix, CategorieService categorie) {
+        this.nom = nom;
+        this.description = description;
+        this.duree = duree;
+        this.prix = prix;
+        this.categorie = categorie;
     }
 }
