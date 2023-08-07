@@ -1,9 +1,12 @@
 package be.icc.tgh.controller;
 
 import be.icc.tgh.model.Reservation;
+import be.icc.tgh.model.StripeResponse;
 import be.icc.tgh.model.User;
 import be.icc.tgh.service.ReservationS;
 import be.icc.tgh.service.UserS;
+import com.stripe.exception.StripeException;
+import com.stripe.model.checkout.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -19,6 +22,13 @@ public class ReservationC {
     private ReservationS service;
     @Autowired
     private UserS userS;
+
+    @PostMapping("/create-checkout-session")
+    public ResponseEntity<StripeResponse> checkoutList(@RequestBody Reservation reservation) throws StripeException {
+        Session session = service.createSession(reservation);
+        StripeResponse stripeResponse = new StripeResponse(session.getId());
+        return new ResponseEntity<StripeResponse>(stripeResponse, HttpStatus.CREATED);
+    }
 
     @GetMapping
     public ResponseEntity<List<Reservation>> getAllReservation() {
