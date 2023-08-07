@@ -42,7 +42,7 @@ public class SecurityConfiguration {
                 "/api/Services/**",
                 "/api/CategorieServices/**",
                 "/api/Users/**",
-                "/api/RendezVous/**",
+                "/api/Reservation/**",
                 "/api/statistiques/**"
         )
           .permitAll()

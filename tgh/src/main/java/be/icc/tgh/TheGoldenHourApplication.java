@@ -1,22 +1,14 @@
 package be.icc.tgh;
 
-import be.icc.tgh.faker.Generator;
-import be.icc.tgh.model.*;
-import be.icc.tgh.service.CategorieServiceS;
-import be.icc.tgh.service.ReservationS;
-import be.icc.tgh.service.ServiceS;
-import be.icc.tgh.service.UserS;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class TheGoldenHourApplication {
     public static void main(String[] args) {
         SpringApplication.run(TheGoldenHourApplication.class, args);
     }
-
+/*
     @Bean
     CommandLineRunner run(ServiceS s, CategorieServiceS c, ReservationS r, UserS u) {
         return args -> {
@@ -68,5 +60,5 @@ public class TheGoldenHourApplication {
             }
 
         };
-    }
+    }*/
 }
