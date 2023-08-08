@@ -1,10 +1,8 @@
 package be.icc.tgh.faker;
 
-import be.icc.tgh.model.Reservation;
-import be.icc.tgh.model.Role;
-import be.icc.tgh.model.Service;
-import be.icc.tgh.model.User;
+import be.icc.tgh.model.*;
 import be.icc.tgh.service.ReservationS;
+import be.icc.tgh.service.ReviewS;
 import be.icc.tgh.service.ServiceS;
 import be.icc.tgh.service.UserS;
 import com.github.javafaker.Faker;
@@ -28,10 +26,14 @@ public class Generator {
     @Autowired
     private ReservationS reservationS;
 
-    public Generator(UserS userService, ServiceS serviceService, ReservationS reservationS) {
+    @Autowired
+    private ReviewS reviewService;
+
+    public Generator(UserS userService, ServiceS serviceService, ReservationS reservationS, ReviewS reviewService) {
         this.userService = userService;
         this.serviceService = serviceService;
         this.reservationS = reservationS;
+        this.reviewService = reviewService;
     }
 
     public Reservation generateFakeReservation() {
@@ -118,6 +120,25 @@ public class Generator {
         userService.creerUser(employer);
 
         return employer;
+    }
+
+    public Review generateFakeReview(Reservation reservation) {
+        Faker faker = new Faker(new Locale("fr"));
+        Random random = new Random();
+
+        Review review = new Review();
+        review.setRating(random.nextInt(6)); // Generate a rating between 0 and 5
+        review.setComment(faker.lorem().paragraph()); // Generate a fake comment
+
+        // Generate a fake user for the review
+        review.setUser(reservation.getUser());
+
+        // Set the reservation for which the review is generated
+        review.setReservation(reservation);
+
+        reviewService.creerReview(review);
+
+        return review;
     }
 
 }
