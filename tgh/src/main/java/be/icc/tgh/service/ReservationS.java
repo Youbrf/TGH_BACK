@@ -30,13 +30,15 @@ public class ReservationS {
     public Reservation getReservationByID(Long id){
         return repo.findById(id).orElse(null);
     }
-    public Reservation creerReservation(Reservation Reservation){
-        Reservation.setDateCreation(LocalDate.now());
-        return repo.save(Reservation);
+    public Reservation creerReservation(Reservation reservation){
+        reservation.setDateCreation(LocalDate.now());
+        reservation.setEtatPaiement("UNPAID");
+        reservation.setStatutReservation("PENDING");
+        return repo.save(reservation);
     }
-    public Reservation updateReservation(Reservation Reservation){
-        Reservation.setDateModification(LocalDate.now());
-        return repo.save(Reservation);
+    public Reservation updateReservation(Reservation reservation){
+        reservation.setDateModification(LocalDate.now());
+        return repo.save(reservation);
     }
     public void deleteReservation(Long id){
         repo.deleteById(id);
@@ -59,34 +61,32 @@ public class ReservationS {
 
         List<SessionCreateParams.LineItem> lineItems = new ArrayList<>();
 
-        // Parcourir la liste des services associés à la réservation
         for (be.icc.tgh.model.Service service : reservation.getServices()) {
-            // Créer un objet LineItem pour chaque service
             SessionCreateParams.LineItem lineItem = SessionCreateParams.LineItem.builder()
-                    .setQuantity(1L) // Définir la quantité
+                    .setQuantity(1L)
                     .setPriceData(
                             SessionCreateParams.LineItem.PriceData.builder()
                                     .setCurrency("eur")
                                     .setUnitAmount((long) (service.getPrix() * 100))
                                     .setProductData(
                                             SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                                                    .setName(service.getNom()) // Définir le nom du service
+                                                    .setName(service.getNom())
                                                     .build())
                                     .build())
                     .build();
 
-            // Ajouter l'objet LineItem à la liste des articles
+
             lineItems.add(lineItem);
         }
 
-        // Créez un nouvel objet de paramètres de création de session
         SessionCreateParams params =
                 SessionCreateParams.builder()
                         .setMode(SessionCreateParams.Mode.PAYMENT)
-                        .setSuccessUrl(baseURL + "success")
-                        .setCancelUrl(baseURL + "cancel")
+                        .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
+                        .addPaymentMethodType(SessionCreateParams.PaymentMethodType.BANCONTACT)
+                        .setSuccessUrl(baseURL + "success?reservation=" + reservation.getId())
                         .setCustomerEmail(reservation.getUser().getEmail())
-                        .addAllLineItem(lineItems) // Ajouter tous les articles à la session
+                        .addAllLineItem(lineItems)
                         .build();
 
         return Session.create(params);

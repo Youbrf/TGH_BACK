@@ -68,7 +68,7 @@ public class Generator {
         reservation.setRemarquesSpeciales(faker.lorem().sentence());
         reservation.setStatutReservation(faker.options().option("CONFIRMED", "PENDING", "CANCELLED"));
         reservation.setMontantTotal(montantTotal);
-        reservation.setModePaiement(faker.options().option("CASH", "CREDIT_CARD", "DEBIT_CARD"));
+        reservation.setModePaiement(faker.options().option("EN LIGNE", "SUR PLACE"));
         reservation.setDateCreation(dateCreation);
         reservation.setDateModification(dateModification);
         reservation.setDateAnnulation(null);

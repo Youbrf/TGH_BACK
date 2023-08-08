@@ -51,6 +51,19 @@ public class ReservationC {
         return new ResponseEntity<>(createdReservation, HttpStatus.CREATED);
     }
 
+    @PutMapping("updated/{id}")
+    public ResponseEntity<Reservation> updateReservationById(@PathVariable("id") Long id) {
+        Reservation reservation = service.getReservationByID(id);
+        reservation.setEtatPaiement("PAID");
+        reservation.setStatutReservation("CONFIRMED");
+        reservation.setModePaiement("EN LIGNE");
+        Reservation updatedReservation = service.updateReservation(reservation);
+        if (updatedReservation == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(updatedReservation, HttpStatus.OK);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Reservation> updateReservation(@PathVariable("id") Long id, @RequestBody Reservation reservation) {
         reservation.setId(id);
