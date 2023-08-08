@@ -27,6 +27,14 @@ public class Service {
     @JoinColumn(name = "id_promotion")
     private Promotion promotion;
 
+    public Service(String nom, String description, int duree, int prix, CategorieService categorie, Promotion promotion) {
+        this.nom = nom;
+        this.description = description;
+        this.duree = duree;
+        this.prix = prix;
+        this.categorie = categorie;
+        this.promotion = promotion;
+    }
     public Service(String nom, String description, int duree, int prix, CategorieService categorie) {
         this.nom = nom;
         this.description = description;

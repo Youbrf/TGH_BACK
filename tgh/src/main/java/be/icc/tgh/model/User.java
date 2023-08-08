@@ -39,6 +39,15 @@ public class User implements UserDetails {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
+    public User(String firstname, String lastname, String email, String password, String gsm, Role role) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.gsm = gsm;
+        this.role = role;
+    }
+
     public User(String email, String password, Role role) {
         this.email = email;
         this.password = password;

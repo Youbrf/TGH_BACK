@@ -15,20 +15,26 @@ public class TheGoldenHourApplication {
     }
 
     @Bean
-    CommandLineRunner run(ServiceS s, CategorieServiceS c, ReservationS r, UserS u, ReviewS re) {
+    CommandLineRunner run(ServiceS s, CategorieServiceS c, ReservationS r, UserS u, ReviewS re, PromotionS p) {
         return args -> {
-            u.creerUser(new User("admin@gmail.com", "admin", Role.ADMIN));
-            u.creerUser(new User("user@gmail.com", "user", Role.USER));
+            Generator ReservationGenerator = new Generator(u, s, r, re, p);
+
+            for (int i = 0; i < 2; i++) {
+                Promotion promotion = ReservationGenerator.generateFakePromotion();
+            }
+
+            u.creerUser(new User("admin","admin","admin@gmail.com", "admin","0487659886", Role.ADMIN));
+            u.creerUser(new User("user","user","user@gmail.com","0487986587", "user", Role.USER));
             c.creerCategorieService(new CategorieService(null, "Beauté Des Mains", "Offrez-vous une expérience de détente ultime pour vos mains avec notre service de beauté des mains. Nos esthéticiennes expérimentées prendront soin de vos ongles, cuticules et vous offriront un massage apaisant pour laisser vos mains douces et revitalisées."));
             c.creerCategorieService(new CategorieService(null, "Beauté Des Pieds", "Détendez-vous et prenez soin de vos pieds fatigués avec notre service de beauté des pieds. Nos spécialistes chouchouteront vos pieds en les exfoliant, en taillant vos ongles, et en vous offrant un massage relaxant pour que vous vous sentiez comme si vous marchiez sur un nuage."));
             c.creerCategorieService(new CategorieService(null, "Faux Ongles", "Obtenez des ongles magnifiquement conçus avec notre service de faux ongles. Nos professionnels de l'onglerie vous proposeront un large éventail de styles, de couleurs et de motifs pour que vos ongles soient élégants et attrayants."));
             c.creerCategorieService(new CategorieService(null, "Beauté Du Regard", "Mettez en valeur vos yeux avec notre service de beauté du regard. Nos experts en beauté vous offriront des traitements spéciaux pour vos sourcils et vos cils, vous donnant un regard captivant et expressif."));
             c.creerCategorieService(new CategorieService(null, "Soin Du Visage", "Prenez soin de votre peau avec notre service de soin du visage. Nos esthéticiennes qualifiées utiliseront des produits de qualité pour nettoyer, exfolier et hydrater votre peau, la laissant éclatante et rafraîchie."));
             c.creerCategorieService(new CategorieService(null, "Beauté De Regard", "Offrez-vous une expérience complète pour sublimer votre regard avec notre service de beauté de regard. Des soins pour vos sourcils et vos cils seront combinés avec des traitements spéciaux pour vos yeux, vous faisant rayonner de beauté."));
-            s.creerService(new Service("Pose de vernis - mains", "Le soin débute par un limage doux sur le bord libre de l'ongle afin de corriger les petites imperfections et les irrégularités. Votre experte va ensuite opérer un polissage soigneux à l'aide d'un polissoir pour rendre les ongles lisses et leur redonner tout leur éclat.", 15, 15, c.getCategorieServiceByID(1L)));
-            s.creerService(new Service("Pose de vernis semi-permanent - mains", "La pose de vernis semi-permanent débute par un limage léger pour préparer les ongles. Ensuite, une base est appliquée suivie de deux couches de vernis semi-permanent. Chaque couche est durcie sous une lampe UV pour une tenue longue durée.", 60, 40, c.getCategorieServiceByID(1L)));
-            s.creerService(new Service("Manucure spa + pose vernis classique", "La manucure spa est un soin complet pour vos mains. Elle comprend le limage, le polissage, le soin des cuticules, un gommage doux pour exfolier la peau, un massage relaxant et enfin, l'application du vernis classique de votre choix.", 40, 30, c.getCategorieServiceByID(1L)));
-            s.creerService(new Service("Soin à la paraffine mains", "Le soin à la paraffine est un traitement hydratant pour vos mains. Vos mains sont plongées dans de la paraffine chaude, puis enveloppées dans des serviettes pour permettre à la paraffine de pénétrer la peau. Ce soin laissera vos mains douces et nourries.", 30, 30, c.getCategorieServiceByID(1L)));
+            s.creerService(new Service("Pose de vernis - mains", "Le soin débute par un limage doux sur le bord libre de l'ongle afin de corriger les petites imperfections et les irrégularités. Votre experte va ensuite opérer un polissage soigneux à l'aide d'un polissoir pour rendre les ongles lisses et leur redonner tout leur éclat.", 15, 15, c.getCategorieServiceByID(1L),p.getPromotionByID(1L)));
+            s.creerService(new Service("Pose de vernis semi-permanent - mains", "La pose de vernis semi-permanent débute par un limage léger pour préparer les ongles. Ensuite, une base est appliquée suivie de deux couches de vernis semi-permanent. Chaque couche est durcie sous une lampe UV pour une tenue longue durée.", 60, 40, c.getCategorieServiceByID(1L),p.getPromotionByID(1L)));
+            s.creerService(new Service("Manucure spa + pose vernis classique", "La manucure spa est un soin complet pour vos mains. Elle comprend le limage, le polissage, le soin des cuticules, un gommage doux pour exfolier la peau, un massage relaxant et enfin, l'application du vernis classique de votre choix.", 40, 30, c.getCategorieServiceByID(1L),p.getPromotionByID(2L)));
+            s.creerService(new Service("Soin à la paraffine mains", "Le soin à la paraffine est un traitement hydratant pour vos mains. Vos mains sont plongées dans de la paraffine chaude, puis enveloppées dans des serviettes pour permettre à la paraffine de pénétrer la peau. Ce soin laissera vos mains douces et nourries.", 30, 30, c.getCategorieServiceByID(1L),p.getPromotionByID(2L)));
             s.creerService(new Service("Pack semi-permanent mains et pieds", "Ce pack comprend une pose de vernis semi-permanent sur vos mains et vos pieds. Le vernis semi-permanent est durable et résistant aux éclats, vous offrant une manucure et une pédicure parfaites pendant plusieurs semaines.", 120, 75, c.getCategorieServiceByID(1L)));
             s.creerService(new Service("Pack soins paraffine + manucure vernis classique", "Ce pack combine le soin à la paraffine pour vos mains et une manucure avec application de vernis classique. Vos mains seront nourries en profondeur grâce à la paraffine, et vos ongles seront sublimés avec le vernis de votre choix.", 70, 55, c.getCategorieServiceByID(1L)));
             s.creerService(new Service("Dépose de vernis semi-permanent mains", "La dépose de vernis semi-permanent consiste à retirer délicatement le vernis existant sans abîmer vos ongles naturels. Une fois le vernis retiré, vos ongles sont limés pour préparer la pose d'un nouveau vernis semi-permanent si vous le souhaitez.", 30, 20, c.getCategorieServiceByID(1L)));
@@ -47,19 +53,15 @@ public class TheGoldenHourApplication {
             s.creerService(new Service("Teinture des cils", "La teinture des cils permet de foncer la couleur de vos cils pour un effet mascara naturel. Cela mettra en valeur vos yeux et donnera l'apparence de cils plus longs et plus épais sans avoir besoin de mascara.", 20, 25, c.getCategorieServiceByID(6L)));
             s.creerService(new Service("Dépose d'extensions de cils", "La dépose d'extensions de cils consiste à retirer délicatement les extensions de cils existantes. Ce processus est réalisé avec soin pour éviter d'endommager vos cils naturels. Vous pouvez ensuite choisir de faire poser de nouvelles extensions ou garder vos cils au naturel.", 30, 25, c.getCategorieServiceByID(6L)));
 
-            // Création de l'instance du générateur avec les repositories
-            Generator ReservationGenerator = new Generator(u, s, r, re);
 
             for (int i = 0; i < 100; i++) {
                 User user = ReservationGenerator.generateFakeUser();
             }
 
-            // Création et enregistrement des employeurs
             for (int i = 0; i < 5; i++) {
                 User employer = ReservationGenerator.generateFakeEmployer();
             }
 
-            // Génération des rendez-vous factices et enregistrement
             for (int i = 0; i < 1000; i++) {
                 Reservation reservation = ReservationGenerator.generateFakeReservation();
                 Review review = ReservationGenerator.generateFakeReview(reservation);

@@ -1,10 +1,7 @@
 package be.icc.tgh.faker;
 
 import be.icc.tgh.model.*;
-import be.icc.tgh.service.ReservationS;
-import be.icc.tgh.service.ReviewS;
-import be.icc.tgh.service.ServiceS;
-import be.icc.tgh.service.UserS;
+import be.icc.tgh.service.*;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,11 +26,15 @@ public class Generator {
     @Autowired
     private ReviewS reviewService;
 
-    public Generator(UserS userService, ServiceS serviceService, ReservationS reservationS, ReviewS reviewService) {
+    @Autowired
+    private PromotionS promotionService;
+
+    public Generator(UserS userService, ServiceS serviceService, ReservationS reservationS, ReviewS reviewService, PromotionS promotionService) {
         this.userService = userService;
         this.serviceService = serviceService;
         this.reservationS = reservationS;
         this.reviewService = reviewService;
+        this.promotionService = promotionService;
     }
 
     public Reservation generateFakeReservation() {
@@ -127,18 +128,33 @@ public class Generator {
         Random random = new Random();
 
         Review review = new Review();
-        review.setRating(random.nextInt(6)); // Generate a rating between 0 and 5
-        review.setComment(faker.lorem().paragraph()); // Generate a fake comment
+        review.setRating(random.nextInt(6));
+        review.setComment(faker.lorem().paragraph());
 
-        // Generate a fake user for the review
         review.setUser(reservation.getUser());
-
-        // Set the reservation for which the review is generated
         review.setReservation(reservation);
 
         reviewService.creerReview(review);
 
         return review;
+    }
+
+    public Promotion generateFakePromotion() {
+        Faker faker = new Faker(new Locale("fr"));
+
+        Promotion promotion = new Promotion();
+        promotion.setNom(faker.commerce().productName());
+        promotion.setDescription(faker.lorem().sentence());
+        promotion.setDateDebut(LocalDate.now().plusDays(ThreadLocalRandom.current().nextLong(30)));
+        promotion.setDateFin(promotion.getDateDebut().plusDays(ThreadLocalRandom.current().nextLong(30, 90)));
+        int randomIndex = ThreadLocalRandom.current().nextInt(0, 7);
+        int[] reductionValues = {5, 10, 15, 20, 25, 30, 40};
+        double reduction = reductionValues[randomIndex] / 100.0;
+        promotion.setReduction(reduction);
+
+        promotionService.creerPromotion(promotion);
+
+        return promotion;
     }
 
 }
