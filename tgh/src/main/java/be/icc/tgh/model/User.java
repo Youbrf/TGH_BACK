@@ -2,6 +2,7 @@ package be.icc.tgh.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,13 +25,18 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue
     private Integer id;
+    @NotNull
     private String firstname;
+    @NotNull
     private String lastname;
+    @NotNull
     private String email;
+    @NotNull
     private String password;
     private String gsm;
 
     @Enumerated(EnumType.STRING)
+    @NotNull
     private Role role;
 
     @Override
