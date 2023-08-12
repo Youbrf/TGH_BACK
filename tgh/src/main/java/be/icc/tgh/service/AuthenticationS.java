@@ -12,6 +12,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationS {
@@ -19,6 +21,7 @@ public class AuthenticationS {
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
+  private final EmailS emailService;
 
   public AuthenticationResponse register(RegisterRequest request) {
     var user = User.builder()
@@ -27,8 +30,13 @@ public class AuthenticationS {
         .email(request.getEmail())
         .password(passwordEncoder.encode(request.getPassword()))
         .role(request.getRole())
+        .confirmationToken(UUID.randomUUID().toString())
         .build();
     repository.save(user);
+
+    String confirmationLink = "http://localhost:4200/confirm?token=" + user.getConfirmationToken();
+    emailService.sendConfirmationEmail(user.getEmail(), confirmationLink);
+
     var jwtToken = jwtService.generateToken(user);
     return AuthenticationResponse.builder()
         .accessToken(jwtToken)

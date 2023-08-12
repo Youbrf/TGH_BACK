@@ -51,4 +51,7 @@ public class UserS {
 
         return repo.findById(randomUser.getId()).orElse(null);
     }
+
+    public User findByConfirmationToken(String token) { return repo.findByConfirmationToken(token);
+    }
 }

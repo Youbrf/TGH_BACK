@@ -39,6 +39,8 @@ public class User implements UserDetails {
     @NotNull
     private Role role;
 
+    private String confirmationToken;
+
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -87,6 +89,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return confirmationToken == null;
     }
 }
