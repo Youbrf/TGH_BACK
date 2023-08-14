@@ -30,14 +30,11 @@ public class AuthenticationC {
   @GetMapping("/confirm")
   public ResponseEntity<String> confirmEmail(@RequestParam("token") String token) {
     User user = userService.findByConfirmationToken(token);
-
     if (user == null) {
       return ResponseEntity.badRequest().body("Token de confirmation invalide.");
     }
-
     user.setConfirmationToken(null);
     userService.creerUser(user);
-
     return ResponseEntity.ok("Email confirmé avec succès");
   }
 
@@ -52,6 +49,12 @@ public class AuthenticationC {
 
     return ResponseEntity.ok(service.authenticate(request));
   }
+
+  @PostMapping("/send-email-reset-password")
+  public ResponseEntity<AuthenticationResponse> resetPassword(@RequestBody String email) {
+    return ResponseEntity.ok(service.resetPassword(email));
+  }
+
 
 
 }

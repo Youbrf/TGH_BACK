@@ -30,6 +30,15 @@ public class UserC {
         return new ResponseEntity<>(User, HttpStatus.OK);
     }
 
+    @GetMapping("/token")
+    public ResponseEntity<User> getUserByToken(@RequestParam("token") String token) {
+        User User = service.findByConfirmationToken(token);
+        if (User == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(User, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User User) {
         User createdUser = service.creerUser(User);
@@ -38,8 +47,15 @@ public class UserC {
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable("id") Integer id, @RequestBody User User) {
+        User updatedUser = new User();
         User.setId(id);
-        User updatedUser = service.updateUser(User);
+        if (User.getConfirmationToken() != null){
+            User.setConfirmationToken(null);
+            updatedUser = service.updateUserPassword(User);
+        }else {
+            updatedUser = service.updateUser(User);
+        }
+
         if (updatedUser == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

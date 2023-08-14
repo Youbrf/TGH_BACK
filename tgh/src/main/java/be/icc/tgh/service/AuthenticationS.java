@@ -43,6 +43,29 @@ public class AuthenticationS {
         .build();
   }
 
+  public AuthenticationResponse resetPassword(String email) {
+    var userOptional = repository.findByEmail(email);
+
+    if (userOptional.isPresent()) {
+      var user = userOptional.get();
+
+      user.setConfirmationToken(UUID.randomUUID().toString());
+      repository.save(user);
+
+      String confirmationLink = "http://localhost:4200/reset?token=" + user.getConfirmationToken();
+      emailService.sendResetMotDePasse(user.getEmail(), confirmationLink);
+
+      return AuthenticationResponse.builder()
+              .errorMessage("Un courriel vous a été envoyé afin de vous permettre de réinitialiser votre mot de passe de manière sécurisée.")
+              .build();
+    } else {
+      return AuthenticationResponse.builder()
+              .errorMessage("Aucun utilisateur correspondant n'a été trouvé.")
+              .build();
+    }
+  }
+
+
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(

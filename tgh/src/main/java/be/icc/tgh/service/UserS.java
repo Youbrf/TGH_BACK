@@ -32,6 +32,10 @@ public class UserS {
     public User updateUser(User user){
         return repo.save(user);
     }
+    public User updateUserPassword(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return repo.save(user);
+    }
     public void deleteUser(Integer id){
         repo.deleteById(id);
     }

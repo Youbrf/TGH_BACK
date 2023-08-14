@@ -18,4 +18,11 @@ public class EmailS {
         mailSender.send(message);
     }
 
+    public void sendResetMotDePasse(String to, String confirmationLink) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setSubject("Réinitialisation du mot de passe");
+        message.setText("Cliquez sur le lien suivant pour réinitialisation votre mot de passe : " + confirmationLink);
+        mailSender.send(message);
+    }
 }
