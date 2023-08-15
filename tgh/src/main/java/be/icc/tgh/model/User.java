@@ -32,13 +32,13 @@ public class User implements UserDetails {
     @NotNull
     private String email;
     @NotNull
+    @JsonIgnore
     private String password;
     private String gsm;
 
     @Enumerated(EnumType.STRING)
     @NotNull
     private Role role;
-
     private String confirmationToken;
 
     @Override

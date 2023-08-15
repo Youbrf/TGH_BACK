@@ -8,6 +8,7 @@ import be.icc.tgh.service.AuthenticationS;
 import be.icc.tgh.service.UserS;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthenticationC {
 
-  private final AuthenticationS service;
+  @Autowired
+  private AuthenticationS service;
 
-  private final UserS userService;
+  @Autowired
+  private UserS userService;
 
   @PostMapping("/register")
   public ResponseEntity<AuthenticationResponse> register(

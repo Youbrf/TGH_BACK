@@ -1,6 +1,7 @@
 package be.icc.tgh.controller;
 
 import be.icc.tgh.model.Reservation;
+import be.icc.tgh.model.Role;
 import be.icc.tgh.model.StripeResponse;
 import be.icc.tgh.model.User;
 import be.icc.tgh.service.ReservationS;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 @RestController
 @RequestMapping("/api/Reservation")
@@ -22,13 +24,6 @@ public class ReservationC {
     private ReservationS service;
     @Autowired
     private UserS userS;
-
-    @PostMapping("/create-checkout-session")
-    public ResponseEntity<StripeResponse> checkoutList(@RequestBody Reservation reservation) throws StripeException {
-        Session session = service.createSession(reservation);
-        StripeResponse stripeResponse = new StripeResponse(session.getId());
-        return new ResponseEntity<StripeResponse>(stripeResponse, HttpStatus.CREATED);
-    }
 
     @GetMapping
     public ResponseEntity<List<Reservation>> getAllReservation() {
@@ -87,15 +82,20 @@ public class ReservationC {
 
     @GetMapping("/user")
     public ResponseEntity<List<Reservation>> getReservationByUser(@RequestParam("id") Integer id){
+        List<Reservation> reservation = new ArrayList<Reservation>();
         User user = userS.getUserByID(id);
-        System.out.println(user);
-        if (user.getRole().toString() == "USER"){
-            List<Reservation> reservation = service.findByUser(user);
-            return new ResponseEntity<>(reservation, HttpStatus.OK);
+        if (user.getRole().equals(Role.USER)){
+            reservation = service.findByUser(user);
         }else {
-            List<Reservation> reservation = service.findByEmployer(user);
-            return new ResponseEntity<>(reservation, HttpStatus.OK);
+            reservation = service.findByEmployer(user);
         }
+        return new ResponseEntity<>(reservation, HttpStatus.OK);
     }
 
+    @PostMapping("/create-checkout-session")
+    public ResponseEntity<StripeResponse> checkoutList(@RequestBody Reservation reservation) throws StripeException {
+        Session session = service.createSession(reservation);
+        StripeResponse stripeResponse = new StripeResponse(session.getId());
+        return new ResponseEntity<StripeResponse>(stripeResponse, HttpStatus.CREATED);
+    }
 }

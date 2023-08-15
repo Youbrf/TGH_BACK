@@ -52,7 +52,7 @@ public class TheGoldenHourApplication {
             s.creerService(new Service("Dépose d'extensions de cils", "La dépose d'extensions de cils consiste à retirer délicatement les extensions de cils existantes. Ce processus est réalisé avec soin pour éviter d'endommager vos cils naturels. Vous pouvez ensuite choisir de faire poser de nouvelles extensions ou garder vos cils au naturel.", 30, 25, c.getCategorieServiceByID(6L)));
 
 
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 50; i++) {
                 User user = ReservationGenerator.generateFakeUser();
             }
 
@@ -60,10 +60,10 @@ public class TheGoldenHourApplication {
                 User employer = ReservationGenerator.generateFakeEmployer();
             }
 
-            for (int i = 0; i < 1000; i++) {
+            for (int i = 0; i < 100; i++) {
                 Reservation reservation = ReservationGenerator.generateFakeReservation();
             }
-            for (int i = 0; i < 500; i++) {
+            for (int i = 0; i < 50; i++) {
                 int randomValue;
                 do {
                     randomValue = random.nextInt(r.getAllReservation().size());
@@ -74,5 +74,5 @@ public class TheGoldenHourApplication {
             }
 
         };
-    } */
+    }*/
 }
