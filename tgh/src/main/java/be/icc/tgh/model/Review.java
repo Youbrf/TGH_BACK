@@ -11,7 +11,7 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = {"reservation", "user"})
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +22,10 @@ public class Review {
     @NotNull
     private String comment;
     @ManyToOne
+    @JoinColumn(name = "user_id")
     @NotNull
     private User user;
     @OneToOne
+    @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 }

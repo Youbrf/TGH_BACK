@@ -29,6 +29,7 @@ public class Generator {
     @Autowired
     private PromotionS promotionService;
 
+
     public Generator(UserS userService, ServiceS serviceService, ReservationS reservationS, ReviewS reviewService, PromotionS promotionService) {
         this.userService = userService;
         this.serviceService = serviceService;
@@ -123,7 +124,7 @@ public class Generator {
         return employer;
     }
 
-    public Review generateFakeReview(Reservation reservation) {
+    public Review generateFakeReview(int number) {
         Faker faker = new Faker(new Locale("fr"));
         Random random = new Random();
 
@@ -131,8 +132,10 @@ public class Generator {
         review.setRating(random.nextInt(6));
         review.setComment(faker.lorem().paragraph());
 
-        review.setUser(reservation.getUser());
-        review.setReservation(reservation);
+        Reservation reservationReview = reservationS.getAllReservation().get(number);
+
+        review.setUser(reservationReview.getUser());
+        review.setReservation(reservationReview);
 
         reviewService.creerReview(review);
 

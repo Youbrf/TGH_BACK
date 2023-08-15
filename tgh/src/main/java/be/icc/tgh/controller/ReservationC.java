@@ -32,17 +32,17 @@ public class ReservationC {
 
     @GetMapping
     public ResponseEntity<List<Reservation>> getAllReservation() {
-        List<Reservation> Reservation = service.getAllReservation();
-        return new ResponseEntity<>(Reservation, HttpStatus.OK);
+        List<Reservation> reservation = service.getAllReservation();
+        return new ResponseEntity<>(reservation, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Reservation> getReservationById(@PathVariable("id") Long id) {
-        Reservation Reservation = service.getReservationByID(id);
-        if (Reservation == null) {
+        Reservation reservation = service.getReservationByID(id);
+        if (reservation == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(Reservation, HttpStatus.OK);
+        return new ResponseEntity<>(reservation, HttpStatus.OK);
     }
 
     @PostMapping
@@ -86,12 +86,15 @@ public class ReservationC {
     }
 
     @GetMapping("/user")
-    public List<Reservation> getReservationByUser(@RequestParam("id") Integer id){
-        User user = this.userS.getUserByID(id);
+    public ResponseEntity<List<Reservation>> getReservationByUser(@RequestParam("id") Integer id){
+        User user = userS.getUserByID(id);
+        System.out.println(user);
         if (user.getRole().toString() == "USER"){
-            return service.findByUser(user);
+            List<Reservation> reservation = service.findByUser(user);
+            return new ResponseEntity<>(reservation, HttpStatus.OK);
         }else {
-            return service.findByEmployer(user);
+            List<Reservation> reservation = service.findByEmployer(user);
+            return new ResponseEntity<>(reservation, HttpStatus.OK);
         }
     }
 

@@ -13,13 +13,16 @@ public class TheGoldenHourApplication {
     CommandLineRunner run(ServiceS s, CategorieServiceS c, ReservationS r, UserS u, ReviewS re, PromotionS p) {
         return args -> {
             Generator ReservationGenerator = new Generator(u, s, r, re, p);
+            Random random = new Random();
+            List<Integer> generatedNumbers = new ArrayList<>();
 
             for (int i = 0; i < 2; i++) {
                 Promotion promotion = ReservationGenerator.generateFakePromotion();
             }
 
-            u.creerUser(new User("admin","admin","admin@gmail.com", "admin","0487659886", Role.ADMIN));
-            u.creerUser(new User("user","user","user@gmail.com","0487986587", "user", Role.USER));
+            u.creerUser(new User("admin","admin","admin@gmail.com", "Admin2023","0487659886", Role.ADMIN));
+            u.creerUser(new User("esth","esth","esth@gmail.com", "Esth2023","0487458684", Role.EMPLOYEE));
+            u.creerUser(new User("client","client","client@gmail.com", "Client2023","0487986587", Role.USER));
             c.creerCategorieService(new CategorieService(null, "Beauté Des Mains", "Offrez-vous une expérience de détente ultime pour vos mains avec notre service de beauté des mains. Nos esthéticiennes expérimentées prendront soin de vos ongles, cuticules et vous offriront un massage apaisant pour laisser vos mains douces et revitalisées."));
             c.creerCategorieService(new CategorieService(null, "Beauté Des Pieds", "Détendez-vous et prenez soin de vos pieds fatigués avec notre service de beauté des pieds. Nos spécialistes chouchouteront vos pieds en les exfoliant, en taillant vos ongles, et en vous offrant un massage relaxant pour que vous vous sentiez comme si vous marchiez sur un nuage."));
             c.creerCategorieService(new CategorieService(null, "Faux Ongles", "Obtenez des ongles magnifiquement conçus avec notre service de faux ongles. Nos professionnels de l'onglerie vous proposeront un large éventail de styles, de couleurs et de motifs pour que vos ongles soient élégants et attrayants."));
@@ -59,9 +62,17 @@ public class TheGoldenHourApplication {
 
             for (int i = 0; i < 1000; i++) {
                 Reservation reservation = ReservationGenerator.generateFakeReservation();
-                Review review = ReservationGenerator.generateFakeReview(reservation);
+            }
+            for (int i = 0; i < 500; i++) {
+                int randomValue;
+                do {
+                    randomValue = random.nextInt(r.getAllReservation().size());
+                } while (generatedNumbers.contains(randomValue));
+                generatedNumbers.add(randomValue);
+
+                Review review = ReservationGenerator.generateFakeReview(randomValue);
             }
 
         };
-    }*/
+    } */
 }
