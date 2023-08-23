@@ -11,7 +11,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="tgh" target="18" />
+      <module name="tgh" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
